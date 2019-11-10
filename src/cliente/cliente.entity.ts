@@ -20,13 +20,14 @@ export class ClienteEntity {
   @Column({ length: 15, unique: true })
   cuit: string;
 
-  @Column('text')
+  //Valores no obligatorios
+  @Column({type:'text', nullable:true })
   imageCliente: string;
 
-  @Column('text')
+  @Column({type:'text', nullable:true })
   telefono: string;
 
-  @Column({ length: 80, unique: true })
+  @Column({ length: 80, unique: true, nullable:true })
   email: string;
 
   @CreateDateColumn({ type: 'timestamp' })

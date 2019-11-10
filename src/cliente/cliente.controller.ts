@@ -6,10 +6,12 @@ import {
   Param,
   Put,
   Delete,
+  UsePipes,
 } from '@nestjs/common';
 
 import { ClienteDTO } from './cliente.dto';
 import { ClienteService } from './cliente.service';
+import { ValidationPipe } from '../shared/validation.pipe';
 
 @Controller('cliente')
 export class ClienteController {
@@ -26,11 +28,13 @@ export class ClienteController {
   }
 
   @Post('/')
+  @UsePipes(new ValidationPipe())
   async createCliente(@Body() newCliente: ClienteDTO) {
     return await this._ClienteService.createCliente(newCliente);
   }
 
   @Put('/:id')
+  @UsePipes(new ValidationPipe())
   async updateCliente(
     @Param('id') id: string,
     @Body() updatedCliente: ClienteDTO,

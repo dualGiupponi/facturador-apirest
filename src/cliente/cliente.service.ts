@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -16,7 +16,11 @@ export class ClienteService {
   }
 
   async getCliente(id: string) {
-    return await this._ClienteRepository.findOne({ id });
+    const getClient = await this._ClienteRepository.findOne({ id });
+    if (!getClient) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+    return getClient;
   }
 
   async createCliente(cliente: ClienteDTO) {
@@ -24,12 +28,20 @@ export class ClienteService {
     return await this._ClienteRepository.save(newCliente);
   }
 
-  async updateCliente(id: string, updateCliente: ClienteDTO) {
+  async updateCliente(id: string, updateCliente: Partial<ClienteDTO>) {
+    const cliente = await this._ClienteRepository.findOne({ id });
+    if (!cliente) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
     await this._ClienteRepository.update({ id }, updateCliente);
     return await this._ClienteRepository.findOne({ id });
   }
 
   async destroyCliente(id: string) {
+    const cliente = await this._ClienteRepository.findOne({ id });
+    if (!cliente) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
     return this._ClienteRepository.delete({ id });
   }
 }
