@@ -1,12 +1,21 @@
-import { PipeTransform, Injectable, ArgumentMetadata, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  PipeTransform,
+  Injectable,
+  ArgumentMetadata,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    if(value instanceof Object && this.isEmpty(value)){
-        throw new HttpException('Validation failed: no data submitted', HttpStatus.BAD_REQUEST)
+    if (value instanceof Object && this.isEmpty(value)) {
+      throw new HttpException(
+        'Validation failed: no data submitted',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     if (!metatype || !this.toValidate(metatype)) {
@@ -15,7 +24,10 @@ export class ValidationPipe implements PipeTransform<any> {
     const object = plainToClass(metatype, value);
     const errors = await validate(object);
     if (errors.length > 0) {
-      throw new HttpException(`Validation failed: ${this.formatErrors(errors)}`, HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        `Validation failed: ${this.formatErrors(errors)}`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
     return value;
   }
@@ -25,18 +37,20 @@ export class ValidationPipe implements PipeTransform<any> {
     return !types.includes(metatype);
   }
 
-  private formatErrors(errors: any[]){
-    return errors.map(err => {
-        for (let property in err.constraints){
-            return err.constraints[property]
+  private formatErrors(errors: any[]) {
+    return errors
+      .map(err => {
+        for (let property in err.constraints) {
+          return err.constraints[property];
         }
-    }).join(', ')
+      })
+      .join(', ');
   }
 
-  private isEmpty(value:any){
-    if(Object.keys(value).length > 0){
-        return false
+  private isEmpty(value: any) {
+    if (Object.keys(value).length > 0) {
+      return false;
     }
-    return true
+    return true;
   }
 }

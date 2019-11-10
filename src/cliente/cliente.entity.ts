@@ -21,13 +21,13 @@ export class ClienteEntity {
   cuit: string;
 
   //Valores no obligatorios
-  @Column({type:'text', nullable:true })
+  @Column({ type: 'text', nullable: true })
   imageCliente: string;
 
-  @Column({type:'text', nullable:true })
+  @Column({ type: 'text', nullable: true })
   telefono: string;
 
-  @Column({ length: 80, unique: true, nullable:true })
+  @Column({ length: 80, unique: true, nullable: true })
   email: string;
 
   @CreateDateColumn({ type: 'timestamp' })

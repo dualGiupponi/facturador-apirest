@@ -1,5 +1,7 @@
 import { IsString, IsEmail, IsOptional } from 'class-validator';
 export class ClienteDTO {
+  @IsString()
+  @IsOptional()
   public readonly id: string;
   @IsString()
   public readonly nombre: string;
