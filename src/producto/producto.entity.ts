@@ -14,7 +14,7 @@ export class ProductosEntity {
   @Column({ length: 50 })
   nombre: string;
 
-  @Column({ length: 50, unique:true })
+  @Column({ length: 50, unique: true })
   codigo: string;
 
   @Column({ length: 300, nullable: true })

@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsNumberString } from 'class-validator';
 
 export class ProductoDTO {
   @IsString()
@@ -15,6 +15,6 @@ export class ProductoDTO {
   @IsOptional()
   public readonly descripcion: string;
 
-  @IsNumber()
+  @IsNumberString()
   public readonly precio_unitario: number;
 }
