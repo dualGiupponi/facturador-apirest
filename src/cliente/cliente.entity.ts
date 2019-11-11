@@ -1,9 +1,11 @@
+import { FacturaEntity } from '../factura/factura.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('clientes')
@@ -35,4 +37,9 @@ export class ClienteEntity {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
+  //Relaciones
+  //Relacion con Factura
+  @OneToMany(type => FacturaEntity, factura => factura.cliente)
+  facturas: FacturaEntity[];
 }

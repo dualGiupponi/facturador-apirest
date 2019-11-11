@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 
+import { FacturaEntity } from '../factura/factura.entity';
+import { ProductosEntity } from '../producto/producto.entity';
 @Entity('item_factura')
 export class ItemEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -11,7 +13,7 @@ export class ItemEntity {
   @Column({ length: 50 })
   codigo_item: string;
 
-  @Column({ length: 300 })
+  @Column({ length: 300, nullable: true })
   descripcion: string;
 
   @Column('decimal')
@@ -21,6 +23,10 @@ export class ItemEntity {
   iva: number;
 
   //Relaciones
-  //Relacion con Producto
-  //Relacion con Factura
+  //Relación con Factura
+  @ManyToOne(type => FacturaEntity, factura => factura.items)
+  factura: FacturaEntity;
+
+  @OneToMany(type => ProductosEntity, producto => producto.item)
+  productos: ProductosEntity[]
 }
