@@ -8,6 +8,7 @@ import { ClienteModule } from './cliente/cliente.module';
 import { HttpErrorFilter } from './shared/http-error.filter';
 import { ProductoModule } from './producto/producto.module';
 import { FacturaModule } from './factura/factura.module';
+import { ItemModule } from './item/item.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { FacturaModule } from './factura/factura.module';
     TypeOrmModule.forRoot(),
     ProductoModule,
     FacturaModule,
+    ItemModule,
   ],
   controllers: [AppController],
   providers: [
