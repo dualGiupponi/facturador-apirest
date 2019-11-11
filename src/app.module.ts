@@ -7,9 +7,15 @@ import { AppService } from './app.service';
 import { ClienteModule } from './cliente/cliente.module';
 import { HttpErrorFilter } from './shared/http-error.filter';
 import { ProductoModule } from './producto/producto.module';
+import { FacturaModule } from './factura/factura.module';
 
 @Module({
-  imports: [ClienteModule, TypeOrmModule.forRoot(), ProductoModule],
+  imports: [
+    ClienteModule,
+    TypeOrmModule.forRoot(),
+    ProductoModule,
+    FacturaModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
