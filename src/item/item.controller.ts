@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, UsePipes, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, UsePipes, Delete, Body } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { ValidationPipe } from '../shared/validation.pipe';
 import { ItemDTO } from './item.dto';
@@ -19,12 +19,12 @@ export class ItemController {
 
   @Post('/')
   @UsePipes(new ValidationPipe())
-  async createItem(newItem: ItemDTO) {
+  async createItem(@Body() newItem: ItemDTO) {
     return await this._itemService.createItem(newItem);
   }
 
   @Delete('/:id')
-  async destroyItem(id: string) {
+  async destroyItem(@Param('id') id: string) {
     return await this._itemService.destroyItem(id);
   }
 }

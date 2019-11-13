@@ -19,5 +19,6 @@ export class FacturaDTO {
   @IsNotEmpty()
   public readonly punto_venta: number;
   @IsDateString()
+  @IsOptional()
   public readonly fecha: Date;
 }

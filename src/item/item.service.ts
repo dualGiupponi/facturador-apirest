@@ -13,11 +13,11 @@ export class ItemService {
   ) {}
 
   async AllItems() {
-    return await this.ItemRepository.find();
+    return await this.ItemRepository.find({relations:['productos']});
   }
 
   async Item(id: string) {
-    const item = await this.ItemRepository.findOne({ id });
+    const item = await this.ItemRepository.findOne({ where:{id}, relations:['productos'] });
     if (!item) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }

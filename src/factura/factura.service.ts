@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 
 import { FacturaEntity } from './factura.entity';
 import { FacturaDTO } from './factura.dto';
+import { ProductosEntity } from '../producto/producto.entity';
 
 @Injectable()
 export class FacturaService {
@@ -13,11 +14,20 @@ export class FacturaService {
   ) {}
 
   async AllFacturas() {
-    return await this.facturaRepository.find();
+    return await this.facturaRepository
+      .createQueryBuilder('facturas')
+      .innerJoinAndSelect('facturas.cliente', 'cliente')
+      .innerJoinAndSelect('facturas.items', 'item_factura')
+      .getMany();
   }
 
   async Factura(id: string) {
-    const factura = await this.facturaRepository.findOne({ id });
+    const factura = await this.facturaRepository
+      .createQueryBuilder('facturas')
+      .innerJoinAndSelect('facturas.cliente', 'cliente')
+      .innerJoinAndSelect('facturas.items', 'item_factura')
+      .where({id})
+      .getOne();
     if (!factura) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }

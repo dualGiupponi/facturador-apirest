@@ -5,7 +5,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 
 @Entity('productos')
@@ -32,6 +33,7 @@ export class ProductosEntity {
   updatedAt: Date;
 
   //Relaciones
-  @ManyToOne(type => ItemEntity, item => item.productos)
-  item: ItemEntity
+  @ManyToMany(type => ItemEntity, item => item.productos)
+  @JoinTable()
+  items: ItemEntity[];
 }

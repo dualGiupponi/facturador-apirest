@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 
 import { FacturaEntity } from '../factura/factura.entity';
 import { ProductosEntity } from '../producto/producto.entity';
+
 @Entity('item_factura')
 export class ItemEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -24,9 +31,11 @@ export class ItemEntity {
 
   //Relaciones
   //Relación con Factura
-  @ManyToOne(type => FacturaEntity, factura => factura.items)
+  @ManyToMany(type => FacturaEntity, factura => factura.items)
+  @JoinTable()
   factura: FacturaEntity;
 
-  @OneToMany(type => ProductosEntity, producto => producto.item)
+  @ManyToMany(type => ProductosEntity, producto => producto.items)
+  @JoinTable()
   productos: ProductosEntity[]
 }

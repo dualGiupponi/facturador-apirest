@@ -4,7 +4,8 @@ import {
   Column,
   CreateDateColumn,
   ManyToOne,
-  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import { ClienteEntity } from '../cliente/cliente.entity';
@@ -31,6 +32,7 @@ export class FacturaEntity {
   @ManyToOne(type => ClienteEntity, cliente => cliente.facturas)
   cliente: ClienteEntity;
   //Relación con Item
-  @OneToMany(type => ItemEntity, item => item.factura)
+  @ManyToMany(type => ItemEntity, item => item.factura)
+  @JoinTable()
   items: ItemEntity[];
 }
