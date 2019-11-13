@@ -1,3 +1,4 @@
+import { ItemDTO } from '../item/item.dto';
 import {
   IsString,
   IsOptional,
@@ -21,4 +22,5 @@ export class FacturaDTO {
   @IsDateString()
   @IsOptional()
   public readonly fecha: Date;
+  public items: ItemDTO[]
 }

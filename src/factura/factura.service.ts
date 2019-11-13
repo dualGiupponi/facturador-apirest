@@ -4,13 +4,14 @@ import { Repository } from 'typeorm';
 
 import { FacturaEntity } from './factura.entity';
 import { FacturaDTO } from './factura.dto';
-import { ProductosEntity } from '../producto/producto.entity';
+import { ItemEntity } from '../item/item.entity';
 
 @Injectable()
 export class FacturaService {
   constructor(
     @InjectRepository(FacturaEntity)
     private facturaRepository: Repository<FacturaEntity>,
+    @InjectRepository(ItemEntity) private itemRepository:Repository<ItemEntity>
   ) {}
 
   async AllFacturas() {
@@ -35,6 +36,7 @@ export class FacturaService {
   }
 
   async createFactura(newFactura: FacturaDTO) {
+    newFactura.items = await this.itemRepository.save(newFactura.items);
     const factura = this.facturaRepository.create(newFactura);
     return await this.facturaRepository.save(factura);
   }
